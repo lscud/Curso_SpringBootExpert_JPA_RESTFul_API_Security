@@ -27,7 +27,7 @@ public class ExemploProjetoApplication {
 				clienteRepositorio.save(c);
 			});
 
-			clienteRepositorio.findByNomeLike("Cli").forEach(System.out::println);
+			clienteRepositorio.procuraPorNomeSQL("Cli").forEach(System.out::println);
 
 			lista = clienteRepositorio.findAll();
 			lista.forEach(System.out::println);
