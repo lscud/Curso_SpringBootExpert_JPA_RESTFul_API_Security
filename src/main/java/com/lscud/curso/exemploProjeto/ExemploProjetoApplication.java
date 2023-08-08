@@ -23,7 +23,7 @@ public class ExemploProjetoApplication {
 			lista.forEach(System.out::println);
 
 			lista.forEach(c -> {
-				c.setNome(c.getNome() + " atualizado."); 
+				c.setNome(c.getNome() + " atualizado.");
 				clienteRepositorio.atualizar(c);
 			});
 
