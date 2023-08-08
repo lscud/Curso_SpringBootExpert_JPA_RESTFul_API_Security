@@ -21,6 +21,26 @@ public class ExemploProjetoApplication {
 
 			List<Cliente> lista = clienteRepositorio.obterTodos();
 			lista.forEach(System.out::println);
+
+			lista.forEach(c -> {
+				c.setNome(c.getNome() + " atualizado.");
+				clienteRepositorio.atualizar(c);
+			});
+
+			clienteRepositorio.buscarPorNome("Cli").forEach(System.out::println);
+
+			lista = clienteRepositorio.obterTodos();
+			lista.forEach(System.out::println);
+
+			clienteRepositorio.obterTodos().forEach(c -> clienteRepositorio.deletar(c));
+
+			lista = clienteRepositorio.obterTodos();
+			if (lista.isEmpty()) {
+				System.out.println("Nenhum cliente encontrado");
+			} else {
+				lista.forEach(System.out::println);
+			}
+
 		};
 	}
 
