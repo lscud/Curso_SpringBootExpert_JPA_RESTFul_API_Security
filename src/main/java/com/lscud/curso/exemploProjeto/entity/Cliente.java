@@ -1,5 +1,6 @@
 package com.lscud.curso.exemploProjeto.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -16,8 +17,12 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)  //PArametro padrão que faz com que os pedidos nao sejam carregados ao consultar um cliente
     private Set<Pedido>  pedidos;
+
+    @Column(name = "cpf", length = 11)
+    private String cpf;
 
     public Cliente() {
     }
@@ -54,6 +59,14 @@ public class Cliente {
 
     public void setPedidos(Set<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
