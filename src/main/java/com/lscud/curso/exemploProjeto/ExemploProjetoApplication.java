@@ -1,45 +1,42 @@
 package com.lscud.curso.exemploProjeto;
 
 import com.lscud.curso.exemploProjeto.entity.Cliente;
+import com.lscud.curso.exemploProjeto.entity.Pedido;
 import com.lscud.curso.exemploProjeto.repository.ClienteRepositorio;
+import com.lscud.curso.exemploProjeto.repository.PedidoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
 public class ExemploProjetoApplication {
 
 	@Bean
-	public CommandLineRunner init(@Autowired ClienteRepositorio clienteRepositorio){
+	public CommandLineRunner init(@Autowired ClienteRepositorio clienteRepositorio, @Autowired PedidoRepositorio pedidoRepositorio){
 		return args ->{
-			clienteRepositorio.save(new Cliente("Douglas"));
+			Cliente cliente = clienteRepositorio.save(new Cliente("Douglas"));
 			clienteRepositorio.save(new Cliente("Outro Cliente"));
 
-			List<Cliente> lista = clienteRepositorio.findAll();
-			lista.forEach(System.out::println);
+			Pedido p = new Pedido();
+			p.setCliente(cliente);
+			p.setDataPedido(LocalDate.now());
+			p.setTotal(BigDecimal.valueOf(100));
 
-			lista.forEach(c -> {
-				c.setNome(c.getNome() + " atualizado.");
-				clienteRepositorio.save(c);
-			});
+			pedidoRepositorio.save(p);
 
-			clienteRepositorio.procuraPorNomeSQL("Cli").forEach(System.out::println);
+//			Cliente cliente_encontrado = clienteRepositorio.findClienteFecthPedidos(cliente.getId());
+//			System.out.println(cliente_encontrado);
+//			System.out.println(cliente_encontrado.getPedidos());
 
-			lista = clienteRepositorio.findAll();
-			lista.forEach(System.out::println);
+			pedidoRepositorio.findByCliente(cliente).forEach(System.out::println);
 
-			clienteRepositorio.findAll().forEach(c -> clienteRepositorio.delete(c));
 
-			lista = clienteRepositorio.findAll();
-			if (lista.isEmpty()) {
-				System.out.println("Nenhum cliente encontrado");
-			} else {
-				lista.forEach(System.out::println);
-			}
 
 		};
 	}
