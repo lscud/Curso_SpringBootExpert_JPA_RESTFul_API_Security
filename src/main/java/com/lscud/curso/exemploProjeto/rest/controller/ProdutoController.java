@@ -1,9 +1,7 @@
 package com.lscud.curso.exemploProjeto.rest.controller;
 
-import com.lscud.curso.exemploProjeto.entity.Cliente;
-import com.lscud.curso.exemploProjeto.entity.Produto;
-import com.lscud.curso.exemploProjeto.repository.ClienteRepositorio;
-import com.lscud.curso.exemploProjeto.repository.ProdutoRepositorio;
+import com.lscud.curso.exemploProjeto.domain.entity.Produto;
+import com.lscud.curso.exemploProjeto.domain.repository.ProdutoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

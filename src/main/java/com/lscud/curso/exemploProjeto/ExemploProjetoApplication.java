@@ -1,9 +1,9 @@
 package com.lscud.curso.exemploProjeto;
 
-import com.lscud.curso.exemploProjeto.entity.Cliente;
-import com.lscud.curso.exemploProjeto.entity.Pedido;
-import com.lscud.curso.exemploProjeto.repository.ClienteRepositorio;
-import com.lscud.curso.exemploProjeto.repository.PedidoRepositorio;
+import com.lscud.curso.exemploProjeto.domain.entity.Cliente;
+import com.lscud.curso.exemploProjeto.domain.entity.Pedido;
+import com.lscud.curso.exemploProjeto.domain.repository.ClienteRepositorio;
+import com.lscud.curso.exemploProjeto.domain.repository.PedidoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootApplication
 public class ExemploProjetoApplication {

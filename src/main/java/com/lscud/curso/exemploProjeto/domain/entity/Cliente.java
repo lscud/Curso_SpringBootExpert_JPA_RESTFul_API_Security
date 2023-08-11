@@ -1,10 +1,15 @@
-package com.lscud.curso.exemploProjeto.entity;
+package com.lscud.curso.exemploProjeto.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "cliente") //nao precisa mas estou colocando para saber que poderia usar caso o nome da tabela fosse diferente do nome do objeto
 public class Cliente {
@@ -24,9 +29,6 @@ public class Cliente {
     @Column(name = "cpf", length = 11)
     private String cpf;
 
-    public Cliente() {
-    }
-
 
     public Cliente(String nome) {
         this.nome = nome;
@@ -37,43 +39,4 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Set<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
-    }
 }

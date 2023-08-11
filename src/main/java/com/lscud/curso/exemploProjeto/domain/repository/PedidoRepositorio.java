@@ -1,7 +1,7 @@
-package com.lscud.curso.exemploProjeto.repository;
+package com.lscud.curso.exemploProjeto.domain.repository;
 
-import com.lscud.curso.exemploProjeto.entity.Cliente;
-import com.lscud.curso.exemploProjeto.entity.Pedido;
+import com.lscud.curso.exemploProjeto.domain.entity.Cliente;
+import com.lscud.curso.exemploProjeto.domain.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.Repository;
 
