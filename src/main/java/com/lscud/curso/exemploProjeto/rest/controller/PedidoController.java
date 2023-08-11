@@ -2,7 +2,9 @@ package com.lscud.curso.exemploProjeto.rest.controller;
 
 import com.lscud.curso.exemploProjeto.domain.entity.ItemPedido;
 import com.lscud.curso.exemploProjeto.domain.entity.Pedido;
+import com.lscud.curso.exemploProjeto.domain.enums.StatusPedido;
 import com.lscud.curso.exemploProjeto.exception.RegraNegocioException;
+import com.lscud.curso.exemploProjeto.rest.dto.AtualizacaoStatusPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.InformacaoItemPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.InformacoesPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.PedidoDTO;
@@ -40,6 +42,13 @@ public class PedidoController {
         return pedidoService.obterPedidoCompleto(id).map(p -> converter(p)).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "pedido nao encontrado."));
     }
 
+    @PatchMapping("{id}") //quando quero atualizar apenas uma parte
+    @ResponseStatus(NO_CONTENT)
+    public void updateStatus(@PathVariable("id") Integer id, @RequestBody  AtualizacaoStatusPedidoDTO dto){
+        String novoStatus = dto.getNovoStatus();
+        pedidoService.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
+    }
+
     private InformacoesPedidoDTO converter(Pedido pedido){
         return InformacoesPedidoDTO.builder()
                 .codigo(pedido.getId())
@@ -47,6 +56,7 @@ public class PedidoController {
                 .cpf(pedido.getCliente().getCpf())
                 .nomeCliente(pedido.getCliente().getNome())
                 .total(pedido.getTotal())
+                .status(pedido.getStatus().name()) //name pega o enum e converte string
                 .items(converter(pedido.getItens()))
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.lscud.curso.exemploProjeto.rest.controller;
 
+import com.lscud.curso.exemploProjeto.exception.PedidoNaoEncontradoException;
 import com.lscud.curso.exemploProjeto.exception.RegraNegocioException;
 import com.lscud.curso.exemploProjeto.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,13 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(RegraNegocioException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handleRegraNegocioException(RegraNegocioException ex){
+        String messageError = ex.getMessage();
+        return new ApiErrors(messageError);
+    }
+
+    @ExceptionHandler(PedidoNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors handlePedidoNotFoundedException(PedidoNaoEncontradoException ex){
         String messageError = ex.getMessage();
         return new ApiErrors(messageError);
     }

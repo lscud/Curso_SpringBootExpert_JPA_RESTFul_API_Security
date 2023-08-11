@@ -1,5 +1,6 @@
 package com.lscud.curso.exemploProjeto.domain.entity;
 
+import com.lscud.curso.exemploProjeto.domain.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,10 @@ public class Pedido {
 
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")
     List<ItemPedido> itens;

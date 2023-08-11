@@ -4,10 +4,12 @@ import com.lscud.curso.exemploProjeto.domain.entity.Cliente;
 import com.lscud.curso.exemploProjeto.domain.entity.ItemPedido;
 import com.lscud.curso.exemploProjeto.domain.entity.Pedido;
 import com.lscud.curso.exemploProjeto.domain.entity.Produto;
+import com.lscud.curso.exemploProjeto.domain.enums.StatusPedido;
 import com.lscud.curso.exemploProjeto.domain.repository.ClienteRepositorio;
 import com.lscud.curso.exemploProjeto.domain.repository.ItemPedidoRepositorio;
 import com.lscud.curso.exemploProjeto.domain.repository.PedidoRepositorio;
 import com.lscud.curso.exemploProjeto.domain.repository.ProdutoRepositorio;
+import com.lscud.curso.exemploProjeto.exception.PedidoNaoEncontradoException;
 import com.lscud.curso.exemploProjeto.exception.RegraNegocioException;
 import com.lscud.curso.exemploProjeto.rest.dto.ItemsPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.PedidoDTO;
@@ -42,6 +44,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itemsPedidos = converterItems(pedido, dto.getItems());
         pedidoRepositorio.save(pedido);
@@ -55,6 +58,16 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return pedidoRepositorio.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+        pedidoRepositorio.findById(id).map(pedido -> {
+            pedido.setStatus(statusPedido);
+            return pedidoRepositorio.save(pedido);
+
+        }).orElseThrow(()-> new PedidoNaoEncontradoException() );
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemsPedidoDTO> items){
