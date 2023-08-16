@@ -2,6 +2,7 @@ package com.lscud.curso.exemploProjeto.rest.controller;
 
 import com.lscud.curso.exemploProjeto.domain.entity.Cliente;
 import com.lscud.curso.exemploProjeto.domain.repository.ClienteRepositorio;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -24,7 +25,7 @@ public class ClienteController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente cliente){
+    public Cliente save(@RequestBody @Valid Cliente cliente){
         return clienteRepositorio.save(cliente);
     }
 
