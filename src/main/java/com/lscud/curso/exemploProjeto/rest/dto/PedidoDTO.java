@@ -1,6 +1,7 @@
 package com.lscud.curso.exemploProjeto.rest.dto;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PedidoDTO {
+    @NotNull(message = "Informe codigo do cliente")
     private Integer cliente;
+    @NotNull(message = "Campo 'total' obrigatorio")
     private BigDecimal total;
 
     private List<ItemsPedidoDTO> items;

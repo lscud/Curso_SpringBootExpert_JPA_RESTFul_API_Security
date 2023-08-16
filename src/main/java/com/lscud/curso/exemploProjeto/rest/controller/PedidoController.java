@@ -9,6 +9,7 @@ import com.lscud.curso.exemploProjeto.rest.dto.InformacaoItemPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.InformacoesPedidoDTO;
 import com.lscud.curso.exemploProjeto.rest.dto.PedidoDTO;
 import com.lscud.curso.exemploProjeto.service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
@@ -31,7 +32,7 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save (@RequestBody PedidoDTO dto){
+    public Integer save (@RequestBody @Valid PedidoDTO dto){
         Pedido pedido = pedidoService.salvar(dto);
         return pedido.getId();
 

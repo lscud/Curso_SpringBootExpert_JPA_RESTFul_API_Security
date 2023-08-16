@@ -2,6 +2,7 @@ package com.lscud.curso.exemploProjeto.rest.controller;
 
 import com.lscud.curso.exemploProjeto.domain.entity.Produto;
 import com.lscud.curso.exemploProjeto.domain.repository.ProdutoRepositorio;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -24,7 +25,7 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto save(@RequestBody Produto produto){
+    public Produto save(@RequestBody @Valid Produto produto){
         return produtoRepositorio.save(produto);
     }
 
@@ -39,7 +40,7 @@ public class ProdutoController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody  Produto produto, @PathVariable("id") Integer id){
+    public void update(@RequestBody  @Valid Produto produto, @PathVariable("id") Integer id){
         Produto produtoFounded = produtoRepositorio.findById(id).map(p -> {
             produto.setId(p.getId());
             produtoRepositorio.save(produto);
