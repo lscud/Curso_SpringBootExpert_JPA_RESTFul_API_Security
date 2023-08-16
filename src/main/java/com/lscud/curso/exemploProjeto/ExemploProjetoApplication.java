@@ -19,7 +19,7 @@ public class ExemploProjetoApplication {
 	@Bean
 	public CommandLineRunner init(@Autowired ClienteRepositorio clienteRepositorio, @Autowired PedidoRepositorio pedidoRepositorio){
 		return args ->{
-			Cliente cliente = clienteRepositorio.save(new Cliente("Douglas"));
+//			Cliente cliente = clienteRepositorio.save(new Cliente("Douglas"));
 //			clienteRepositorio.save(new Cliente("Outro Cliente"));
 //
 //			Pedido p = new Pedido();
