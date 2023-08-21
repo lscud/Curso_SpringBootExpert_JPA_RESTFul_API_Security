@@ -1,12 +1,12 @@
 package com.lscud.curso.exemploProjeto.rest.dto;
 
+
 import com.lscud.curso.exemploProjeto.domain.validation.NotEmptyList;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
