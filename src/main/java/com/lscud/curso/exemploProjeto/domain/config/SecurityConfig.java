@@ -1,6 +1,9 @@
 package com.lscud.curso.exemploProjeto.domain.config;
 
+import com.lscud.curso.exemploProjeto.service.impl.UsuarioServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -18,11 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
-                .withUser("fulano")
-                .password(passwordEncoder().encode("123"))
-                .roles("USER", "ADMIN");
+        auth
+                .userDetailsService(usuarioService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -36,8 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/produtos/**")
                         .hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/usuarios/**")
+                    .permitAll()//qualquer pessoa fazer cadastro de usuarios
+                .anyRequest().authenticated() //caso eu esqueça de alguma outra url. Então no minimo tem que estar autenticado
                 .and()
-                .formLogin(); //formulario de login eprsonalizado (uma pagina por exemplo customizada)
+                .httpBasic();
         ;
     }
 
