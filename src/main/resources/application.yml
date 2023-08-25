@@ -15,3 +15,7 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+security.jwt.expiracao: 30
+security.jwt.chave-assinatura: YSBsZWJyZSDDqSBicmFuY2E
+
