@@ -2,6 +2,7 @@ package com.lscud.curso.exemploProjeto.rest.controller;
 
 import com.lscud.curso.exemploProjeto.domain.entity.Cliente;
 import com.lscud.curso.exemploProjeto.domain.repository.ClienteRepositorio;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,16 +16,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
+@Api("Api Clientes")
 public class ClienteController {
 
     @Autowired
     private ClienteRepositorio  clienteRepositorio;
     @GetMapping(value = "{id}")
-    public Cliente getClienteById(@PathVariable("id") Integer id ){
+    @ApiOperation("Obter detalhes de um cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200,
+                    message = "Cliente encontrado"),
+            @ApiResponse(code = 404,
+                    message = "Cliente nao encontrado para o ID informado"
+            )
+    })
+    public Cliente getClienteById(@PathVariable("id") @ApiParam("Id do Cliente") Integer id ){
         return clienteRepositorio.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "cliente nao encontrado"));
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("Salva um novo cliente")
+    @ApiResponses({
+            @ApiResponse(code = 201,
+                    message = "Cliente salvo com sucesso"),
+            @ApiResponse(code = 400,
+                    message = "Erro de validação"
+            )
+    })
     public Cliente save(@RequestBody @Valid Cliente cliente){
         return clienteRepositorio.save(cliente);
     }
