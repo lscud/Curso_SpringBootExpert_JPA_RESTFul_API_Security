@@ -30,7 +30,7 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    @Column(precision = 20, scale = 2)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
     @Enumerated(EnumType.STRING)
@@ -38,6 +38,6 @@ public class Pedido {
     private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")
-    List<ItemPedido> itens;
+    private List<ItemPedido> itens;
 
 }

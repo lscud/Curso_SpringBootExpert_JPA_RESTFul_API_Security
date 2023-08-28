@@ -1,9 +1,5 @@
 package com.lscud.curso.exemploProjeto.domain.config;
 
-import com.lscud.curso.exemploProjeto.domain.entity.Usuario;
-import com.lscud.curso.exemploProjeto.domain.repository.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +9,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import java.util.Locale;
 
 @Configuration
-public class IntercionalizacaoConfig{
+public class InternacionalizacaoConfig {
 
     @Bean
     public MessageSource messageSource(){
