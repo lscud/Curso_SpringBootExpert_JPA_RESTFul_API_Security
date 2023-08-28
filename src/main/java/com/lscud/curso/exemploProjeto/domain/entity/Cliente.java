@@ -17,7 +17,7 @@ import java.util.Set;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id") //nao precisa mas estou colocando para saber que poderia usar caso o nome da coluna na tabela fosse diferente.
     private Integer id;
 
