@@ -2,12 +2,19 @@ package com.lscud.curso.exemploProjeto.rest.controller;
 
 import com.lscud.curso.exemploProjeto.domain.entity.Usuario;
 import com.lscud.curso.exemploProjeto.domain.repository.UsuarioRepositorio;
+import com.lscud.curso.exemploProjeto.exception.SenhaInvalidaException;
+import com.lscud.curso.exemploProjeto.rest.dto.CredenciaisDTO;
+import com.lscud.curso.exemploProjeto.rest.dto.TokenDTO;
+import com.lscud.curso.exemploProjeto.security.jwt.JwtService;
 import com.lscud.curso.exemploProjeto.service.impl.UsuarioServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,6 +25,7 @@ import java.util.List;
 public class UsuarioController {
     private final UsuarioServiceImpl usuarioService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -26,5 +34,23 @@ public class UsuarioController {
         usuario.setSenha(senhaCriptografada);
         return usuarioService.salvar(usuario);
     }
+
+    @PostMapping("/auth")
+    public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
+
+        try {
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
+            UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
+            String token = jwtService.gerarToken(usuario);
+            return new TokenDTO(usuario.getLogin(), token);
+
+        } catch (UsernameNotFoundException | SenhaInvalidaException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+
+    }
+
 
 }

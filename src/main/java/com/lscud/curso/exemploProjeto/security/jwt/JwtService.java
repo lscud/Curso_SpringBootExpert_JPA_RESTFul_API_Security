@@ -1,5 +1,7 @@
-package com.lscud.curso.exemploProjeto;
+package com.lscud.curso.exemploProjeto.security.jwt;
 
+
+import com.lscud.curso.exemploProjeto.ExemploProjetoApplication;
 import com.lscud.curso.exemploProjeto.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -11,6 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -27,11 +30,12 @@ public class JwtService {
     public String gerarToken(Usuario usuario){
         long expString = Long.valueOf(expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
-        Date data = Date.from(dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant());
+        Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
+        Date data = Date.from(instant);
 
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("emaildousuario", "usuario@gmail.com");
-        claims.put("roles", "admin");
+//        HashMap<String, Object> claims = new HashMap<>();
+//        claims.put("emaildousuario", "usuario@gmail.com");
+//        claims.put("roles", "admin");
 
         return Jwts
                 .builder()
