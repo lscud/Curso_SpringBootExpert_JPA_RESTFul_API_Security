@@ -27,6 +27,8 @@ public class SwaggerConfig {
                     .apis(RequestHandlerSelectors.basePackage("com.lscud.curso.exemploProjeto.rest.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
                 .apiInfo(apiInfo());
     }
 
@@ -42,5 +44,24 @@ public class SwaggerConfig {
         return new Contact("Luis Antonio R. Scudeler", "http://github.com/lscud", "luisscudeler@yahoo.com.br");
     }
 
+    public ApiKey apiKey(){
+        return new ApiKey("JWT", "Authorization", "header");
+    }
 
+    private SecurityContext securityContext(){
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] scopes = new AuthorizationScope[1];
+        scopes[0] = authorizationScope;
+        SecurityReference reference = new SecurityReference("JWT", scopes);
+        List<SecurityReference> auths = new ArrayList<>();
+        auths.add(reference);
+        return auths;
+    }
 }
