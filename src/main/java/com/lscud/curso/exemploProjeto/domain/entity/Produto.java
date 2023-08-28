@@ -18,6 +18,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotEmpty(message = "{campo.descricao.obrigatorio}")
+    @Column(name = "nome")
     private String descricao;
 
     @Column(name = "preco_unitario")
